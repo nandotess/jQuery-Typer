@@ -19,7 +19,8 @@ String.prototype.rightChars = function(n){
       typeDelay         : 200,
       clearOnHighlight  : true,
       typerDataAttr     : 'data-typer-targets',
-      typerInterval     : 2000
+      typerInterval     : 2000,
+      debug             : false
     },
     highlight,
     clearText,
@@ -199,12 +200,16 @@ String.prototype.rightChars = function(n){
       j = 0;
 
     if (currentText === newString) {
-      console.log("Our strings our equal, nothing to type");
+      if ($.typer.options.debug === true) {
+        console.log("Our strings our equal, nothing to type");
+      }
       return;
     }
 
     if (currentText !== $e.html()) {
-      console.error("Typer does not work on elements with child elements.");
+      if ($.typer.options.debug === true) {
+        console.error("Typer does not work on elements with child elements.");
+      }
       return;
     }
 
