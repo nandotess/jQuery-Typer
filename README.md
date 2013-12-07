@@ -36,7 +36,8 @@ There are some options that are available to you as well:
   typeDelay         : 200,
   clearOnHighlight  : true,
   typerDataAttr     : 'data-typer-targets',
-  typerInterval     : 2000
+  typerInterval     : 2000,
+  tapeColor         : 'auto' // 'auto' or a css color value
 }
 ```
 

@@ -3,8 +3,12 @@
 <head>
     <title>jquery.typer.js test page</title>
 </head>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="src/jquery.typer.js"></script>
+  <style type="text/css">
+    h3 { color: blue; }
+    .cyan { background-color: cyan; padding: 1em; }
+  </style>
 <body>
 
   <h1>Hello, World!</h1>
@@ -12,9 +16,21 @@
 
   <h2 data-typer-targets="abcdefgfedcba,afgfa">Welcome</h2>
 
+  <h3 data-typer-targets="foobar,lorem,ipsum">Hello World!</h3>
+
+  <div class="cyan">
+    <h3 data-typer-targets="foobar,lorem,ipsum">Hello World!</h3>
+  </div>
+
+  <p id="test"></p>
+
   <script>
     $(function () {
+      $.typer.options.tapeColor = 'orange';
+      //$.typer.options.tapeColor = '#ff9900';
       $('[data-typer-targets]').typer();
+
+      $('#test').typeTo('Hello World');
     });
   </script>
 </body>

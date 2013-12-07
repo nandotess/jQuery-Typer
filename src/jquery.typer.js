@@ -20,7 +20,8 @@ String.prototype.rightChars = function(n){
       clearOnHighlight  : true,
       typerDataAttr     : 'data-typer-targets',
       typerInterval     : 2000,
-      debug             : false
+      debug             : false,
+      tapeColor         : 'auto'
     },
     highlight,
     clearText,
@@ -132,7 +133,7 @@ String.prototype.rightChars = function(n){
       .append(
         spanWithColor(
             $e.data('backgroundColor'),
-            $e.data('primaryColor')
+            $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor
           )
           .append(highlightedText)
       )
@@ -231,7 +232,7 @@ String.prototype.rightChars = function(n){
       oldRight: currentText.rightChars(j - 1),
       leftStop: i,
       rightStop: currentText.length - j,
-      primaryColor: $e.css('color'),
+      primaryColor: $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor),
       backgroundColor: $e.css('background-color'),
       text: newString
     });
