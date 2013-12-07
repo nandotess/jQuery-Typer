@@ -51,15 +51,16 @@ String.prototype.rightChars = function(n){
   };
 
   clearData = function ($e) {
-    $e
-      .data('typePosition',       null)
-      .data('highlightPosition',  null)
-      .data('leftStop',           null)
-      .data('rightStop',          null)
-      .data('primaryColor',       null)
-      .data('backgroundColor',    null)
-      .data('text',               null)
-      .data('typing',             null);
+    $e.removeData([
+      'typePosition',
+      'highlightPosition',
+      'leftStop',
+      'rightStop',
+      'primaryColor',
+      'backgroundColor',
+      'text',
+      'typing'
+    ]);
   };
 
   type = function ($e) {
@@ -83,10 +84,11 @@ String.prototype.rightChars = function(n){
       oldLeft +
       text.charAt(0) +
       oldRight
-    );
+    ).data({
+      oldLeft: oldLeft + text.charAt(0),
+      text: text.substring(1)
+    });
 
-    $e.data('oldLeft', oldLeft + text.charAt(0));
-    $e.data('text', text.substring(1));
     // $e.text($e.text() + text.substring(position, position + 1));
 
     // $e.data('typePosition', position + 1);
@@ -126,8 +128,7 @@ String.prototype.rightChars = function(n){
     highlightedText = $e.text().substring(position - 1, $e.data('rightStop') + 1);
     rightText = $e.text().substring($e.data('rightStop') + 1);
 
-    $e.html(leftText);
-    $e
+    $e.html(leftText)
       .append(
         spanWithColor(
             $e.data('backgroundColor'),
@@ -178,12 +179,12 @@ String.prototype.rightChars = function(n){
   $.fn.typer = function() {
     var $elements = $(this);
 
-    $elements = $elements.filter(function () {
-      return typeof $(this).attr($.typer.options.typerDataAttr) !== "undefined"
-    });
-
-    $elements.each(function () {
+    return $elements.each(function () {
       var $e = $(this);
+
+      if (typeof $e.attr($.typer.options.typerDataAttr) === "undefined") {
+        return;
+      }
 
       typeWithAttribute($e);
       setInterval(function () {
@@ -203,14 +204,14 @@ String.prototype.rightChars = function(n){
       if ($.typer.options.debug === true) {
         console.log("Our strings our equal, nothing to type");
       }
-      return;
+      return $e;
     }
 
     if (currentText !== $e.html()) {
       if ($.typer.options.debug === true) {
         console.error("Typer does not work on elements with child elements.");
       }
-      return;
+      return $e;
     }
 
     $e.data('typing', true);
@@ -225,14 +226,19 @@ String.prototype.rightChars = function(n){
 
     newString = newString.substring(i, newString.length - j + 1);
 
-    $e.data('oldLeft', currentText.substring(0, i));
-    $e.data('oldRight', currentText.rightChars(j - 1));
-    $e.data('leftStop', i);
-    $e.data('rightStop', currentText.length - j);
-    $e.data('primaryColor', $e.css('color'));
-    $e.data('backgroundColor', $e.css('background-color'));
-    $e.data('text', newString);
+    $e.data({
+      oldLeft: currentText.substring(0, i),
+      oldRight: currentText.rightChars(j - 1),
+      leftStop: i,
+      rightStop: currentText.length - j,
+      primaryColor: $e.css('color'),
+      backgroundColor: $e.css('background-color'),
+      text: newString
+    });
+
     highlight($e);
+
+    return $e;
   };
 
   //-- Helper methods. These can one day be customized further to include things like ranges of delays.
