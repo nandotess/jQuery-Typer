@@ -232,7 +232,7 @@ String.prototype.rightChars = function(n){
       oldRight: currentText.rightChars(j - 1),
       leftStop: i,
       rightStop: currentText.length - j,
-      primaryColor: $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor),
+      primaryColor: $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor,
       backgroundColor: $e.css('background-color'),
       text: newString
     });
