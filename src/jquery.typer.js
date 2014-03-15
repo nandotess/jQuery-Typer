@@ -18,6 +18,7 @@ String.prototype.rightChars = function(n){
       clearDelay        : 500,
       typeDelay         : 200,
       clearOnHighlight  : true,
+      highlightEverything: true,
       typerDataAttr     : 'data-typer-targets',
       typerInterval     : 2000,
       debug             : false,
@@ -233,12 +234,14 @@ String.prototype.rightChars = function(n){
 
     $e.data('typing', true);
 
-    while (currentText.charAt(i) === newString.charAt(i)) {
-      i++;
-    }
+    if ($.typer.options.highlightEverything !== true) {
+      while (currentText.charAt(i) === newString.charAt(i)) {
+        i++;
+      }
 
-    while (currentText.rightChars(j) === newString.rightChars(j)) {
-      j++;
+      while (currentText.rightChars(j) === newString.rightChars(j)) {
+        j++;
+      }
     }
 
     newString = newString.substring(i, newString.length - j + 1);
