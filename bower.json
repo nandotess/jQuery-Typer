@@ -1,0 +1,29 @@
+{
+  "name": "jquery-typer",
+  "version": "1.0.0",
+  "homepage": "https://github.com/kontur/jquery.typer.js",
+  "authors": [
+    "Various",
+    "check github repo"
+  ],
+  "description": "JQuery plugin for typing out text",
+  "main": "./src/jquery.typer.js",
+  "keywords": [
+    "JQuery",
+    "plugin",
+    "text",
+    "typewriter"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "1.11.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}
