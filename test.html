@@ -26,9 +26,9 @@
 
   <script>
     $(function () {
-      $.typer.options.tapeColor = 'orange';
-      //$.typer.options.tapeColor = '#ff9900';
-      $('[data-typer-targets]').typer();
+      $('[data-typer-targets]').typer({
+        tapeColor: 'orange'
+      });
 
       $('#test').typeTo('Hello World');
     });
