@@ -3,35 +3,202 @@
 <head>
     <title>jquery.typer.js test page</title>
 </head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="src/jquery.typer.js"></script>
-  <style type="text/css">
-    h3 { color: blue; }
-    .cyan { background-color: cyan; padding: 1em; }
-  </style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="src/jquery.typer.js"></script>
+<style type="text/css">
+    body {
+        margin: 3em auto;
+        max-width: 40em;
+    }
+    #color-highlight {
+        color: #0b97c4;
+    }
+
+    #color-background {
+        background: #0b97c4;
+    }
+
+    .example {
+        min-height: 5em;
+        margin-bottom: 3em;
+    }
+
+    .background {
+        background-color: #ccc;
+        padding: 0.25em;
+    }
+
+    button {
+        margin: 1em 0;
+    }
+
+    h2 {
+        margin: 0 0 0.5em;
+    }
+
+    p {
+        font-family: monospace;
+        margin: 0;
+    }
+
+    .example > code {
+        background: #eee;
+        display: inline-block;
+        padding: 1em 0.5em;
+        margin: 0.5em 0;
+        min-width: 30em;
+        white-space: pre;
+    }
+</style>
 <body>
 
-  <h1>Hello, World!</h1>
-  <h2 data-typer-targets="Hello,Hi,Hola,Hallo,Haai,Ola,Kaixo,Moni,Aloha,Bonjour,Ciao,Hej">Welcome</h2>
+<h1>Typer testing and samples!</h1>
 
-  <h2 data-typer-targets="abcdefgfedcba,afgfa">Welcome</h2>
 
-  <h3 data-typer-targets="foobar,lorem,ipsum">Hello World!</h3>
+<div class="example">
+    <h2>Default with <code>data-typer-targets</code></h2>
 
-  <div class="cyan">
-    <h3 data-typer-targets="foobar,lorem,ipsum">Hello World!</h3>
-  </div>
+    <p id="default" data-typer-targets="Hello,Hi,Hola,Hallo,Haai,Ola,Kaixo,Moni,Aloha,Bonjour,Ciao,Hej">Welcome</p>
+    <script>
+        $(function () {
+            $("#default").typer();
+        });
+    </script>
+</div>
 
-  <p id="test"></p>
 
-  <script>
-    $(function () {
-      $('[data-typer-targets]').typer({
-        tapeColor: 'orange'
-      });
+<div class="example">
+    <h2>Default, automatically using the element's text color as <code>highlightColor</code></h2>
+    <code>$("#element").typer();</code>
 
-      $('#test').typeTo('Hello World');
-    });
-  </script>
+    <p id="color-highlight" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $("#color-highlight").typer();
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>Default, automatically using the element's text color as <code>highlightColor</code></h2>
+    <code>$("#element").typer();</code>
+
+    <p id="color-background" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $("#color-background").typer();
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>With option <code>backgroundColor</code></h2>
+<code>$("#element").typer({
+    backgroundColor: 'orange'
+});
+</code>
+
+    <p id="background-color" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $('#background-color').typer({
+                backgroundColor: 'orange'
+            });
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>With option <code>highlightColor</code></h2>
+<code>$("#element").typer({
+    highlightColor: 'orange'
+});
+</code>
+
+    <p id="highlight-color" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $('#highlight-color').typer({
+                highlightColor: 'orange'
+            });
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>With option <code>highlightColor</code> and <code>backgroundColor</code> combined</h2>
+<code>$("#element").typer({
+    highlightColor: 'orange',
+    backgroundColor: 'purple'
+});
+</code>
+    <p id="highlight-background-color" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $('#highlight-background-color').typer({
+                highlightColor: 'orange',
+                backgroundColor: 'purple'
+            });
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>With option <code>random</code></h2>
+    <span>Randomize the strings in <code>data-typer-targets="lorem,ipsum,dol,solor"</code></span>
+    <code>$("#element").typer({
+    typerOrder: 'random'
+});</code>
+
+    <p id="order-random" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $("#order-random").typer({
+                typerOrder: 'random'
+            });
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>With option <code>sequential</code></h2>
+    <span>Type the strings in <code>data-typer-targets="lorem,ipsum,dol,solor"</code> in sequence</span>
+    <code>$("#element").typer({
+    typerOrder: 'sequential'
+});</code>
+
+    <p id="order-sequential" data-typer-targets="lorem,ipsum,dol,solor">Hello World!</p>
+    <script>
+        $(function () {
+            $("#order-sequential").typer({
+                typerOrder: 'sequential'
+            });
+        });
+    </script>
+</div>
+
+
+<div class="example">
+    <h2>Using <code>.typeTo()</code></h2>
+    <code>$("#element").typeTo("Hello Typer!");</code>
+    <p id="type-to"></p>
+    <button id="type-to-start">Type to!</button>
+    <script>
+        $(function () {
+            $('#type-to').typeTo('Hello Typer!');
+            $('#type-to-start').click(function () {
+                $('#type-to').html('').typeTo('Hello Typer!')
+            });
+        });
+    </script>
+</div>
+
+
 </body>
 </html>

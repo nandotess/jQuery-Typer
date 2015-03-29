@@ -26,11 +26,8 @@ String.prototype.rightChars = function(n){
       intervalHandle,
       typerInterval;
 
-  spanWithColor = function(color, backgroundColor) {
-    if (color === 'rgba(0, 0, 0, 0)') {
-      color = 'rgb(255, 255, 255)';
-    }
 
+  spanWithColor = function(color, backgroundColor) {
     return $('<span></span>')
       .css('color', color)
       .css('background-color', backgroundColor);
@@ -100,7 +97,8 @@ String.prototype.rightChars = function(n){
       position = $e.data('highlightPosition'),
       leftText,
       highlightedText,
-      rightText;
+      rightText,
+      options = $e.data('options');
 
     if (!isNumber(position)) {
       position = $e.data('rightStop') + 1;
@@ -120,8 +118,8 @@ String.prototype.rightChars = function(n){
     $e.html(leftText)
       .append(
         spanWithColor(
-            $e.data('backgroundColor'),
-            opts.tapeColor === 'auto' ? $e.data('primaryColor') : opts.tapeColor
+            options.highlightColor === 'auto' ? $e.css('background-color') : options.highlightColor,
+            options.backgroundColor === 'auto' ? $e.css('color') : options.backgroundColor
           )
           .append(highlightedText)
       )
@@ -139,30 +137,31 @@ String.prototype.rightChars = function(n){
 
     return function($e) {
       var targets;
+      var options = $e.data('options');
 
       if ($e.data('typing')) {
         return;
       }
 
       try {
-        targets = JSON.parse($e.attr(opts.typerDataAttr)).targets;
+        targets = JSON.parse($e.attr(options.typerDataAttr)).targets;
       } catch (e) {}
 
       if (typeof targets === "undefined") {
-        targets = $.map($e.attr(opts.typerDataAttr).split(','), function (e) {
+        targets = $.map($e.attr(options.typerDataAttr).split(','), function (e) {
           return $.trim(e);
         });
       }
 
-      if (opts.typerOrder === 'random') {
+      if (options.typerOrder === 'random') {
         $e.typeTo(targets[Math.floor(Math.random()*targets.length)]);
       }
-      else if (opts.typerOrder === 'sequential') {
+      else if (options.typerOrder === 'sequential') {
         $e.typeTo(targets[last]);
         last = (last < targets.length - 1) ? last + 1 : 0;
       }
       else {
-        console.error("Type order of '" + opts.typerOrder + "' not supported");
+        console.error("Type order of '" + options.typerOrder + "' not supported");
         clearInterval(intervalHandle);
       }
     };
@@ -173,10 +172,15 @@ String.prototype.rightChars = function(n){
   $.fn.typer = function(options) {
     var $elements = $(this);
 
+    if ($elements.length < 1) {
+      return;
+    }
+
     opts = jQuery.extend({}, $.fn.typer.defaults, options);
 
     return $elements.each(function () {
       var $e = $(this);
+      $e.data('options', opts);
 
       if (typeof $e.attr(opts.typerDataAttr) === "undefined") {
         return;
@@ -189,12 +193,13 @@ String.prototype.rightChars = function(n){
     });
   };
 
-  $.fn.typeTo = function (newString) {
+  $.fn.typeTo = function (newString, options) {
     var
       $e = $(this),
       currentText = $e.text(),
       i = 0,
-      j = 0;
+      j = 0,
+      opts = jQuery.extend({}, $.fn.typer.defaults, options, $e.data('options'));
 
     if (currentText === newString) {
       if (opts.debug === true) {
@@ -225,12 +230,13 @@ String.prototype.rightChars = function(n){
     newString = newString.substring(i, newString.length - j + 1);
 
     $e.data({
+      options: opts,
       oldLeft: currentText.substring(0, i),
       oldRight: currentText.rightChars(j - 1),
       leftStop: i,
       rightStop: currentText.length - j,
-      primaryColor: opts.tapeColor === 'auto' ? $e.data('primaryColor') : opts.tapeColor,
-      backgroundColor: $e.css('background-color'),
+      //primaryColor: opts.backgroundColor === 'auto' ? $e.data('primaryColor') : opts.backgroundColor,
+      //backgroundColor: $e.css('background-color'),
       text: newString
     });
 
@@ -271,8 +277,9 @@ String.prototype.rightChars = function(n){
     typerDataAttr       : 'data-typer-targets',
     typerInterval       : 2000,
     debug               : false,
-    tapeColor           : 'auto',
-    typerOrder          : 'random',
+    backgroundColor     : 'auto',
+    highlightColor      : 'auto',
+    typerOrder          : 'random'
   };
 
 })(jQuery);
