@@ -11,34 +11,21 @@ String.prototype.rightChars = function(n){
 };
 
 (function($) {
-  var
-    options = {
-      highlightSpeed    : 20,
-      typeSpeed         : 100,
-      clearDelay        : 500,
-      typeDelay         : 200,
-      clearOnHighlight  : true,
-      highlightEverything: true,
-      typerDataAttr     : 'data-typer-targets',
-      typerInterval     : 2000,
-      debug             : false,
-      tapeColor         : 'auto',
-      typerOrder        : 'random',
-    },
-    highlight,
-    clearText,
-    backspace,
-    type,
-    spanWithColor,
-    clearDelay,
-    typeDelay,
-    clearData,
-    isNumber,
-    typeWithAttribute,
-    getHighlightInterval,
-    getTypeInterval,
-    intervalHandle,
-    typerInterval;
+  var opts,
+      highlight,
+      clearText,
+      backspace,
+      type,
+      spanWithColor,
+      clearDelay,
+      typeDelay,
+      clearData,
+      isNumber,
+      typeWithAttribute,
+      getHighlightInterval,
+      getTypeInterval,
+      intervalHandle,
+      typerInterval;
 
   spanWithColor = function(color, backgroundColor) {
     if (color === 'rgba(0, 0, 0, 0)') {
@@ -82,7 +69,6 @@ String.prototype.rightChars = function(n){
       clearData($e);
       return;
     }
-
 
     $e.text(
       oldLeft +
@@ -136,7 +122,7 @@ String.prototype.rightChars = function(n){
       .append(
         spanWithColor(
             $e.data('backgroundColor'),
-            $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor
+            opts.tapeColor === 'auto' ? $e.data('primaryColor') : opts.tapeColor
           )
           .append(highlightedText)
       )
@@ -160,47 +146,40 @@ String.prototype.rightChars = function(n){
       }
 
       try {
-        targets = JSON.parse($e.attr($.typer.options.typerDataAttr)).targets;
+        targets = JSON.parse($e.attr(opts.typerDataAttr)).targets;
       } catch (e) {}
 
       if (typeof targets === "undefined") {
-        targets = $.map($e.attr($.typer.options.typerDataAttr).split(','), function (e) {
+        targets = $.map($e.attr(opts.typerDataAttr).split(','), function (e) {
           return $.trim(e);
         });
       }
 
-      if ($.typer.options.typerOrder == 'random') {
+      if (opts.typerOrder == 'random') {
         $e.typeTo(targets[Math.floor(Math.random()*targets.length)]);
       }
-      else if ($.typer.options.typerOrder == 'sequential') {
+      else if (opts.typerOrder == 'sequential') {
         $e.typeTo(targets[last]);
         last = (last < targets.length - 1) ? last + 1 : 0;
       }
       else {
-        console.error("Type order of '" + $.typer.options.typerOrder + "' not supported");
+        console.error("Type order of '" + opts.typerOrder + "' not supported");
         clearInterval(intervalHandle);
       }
-    }
+    };
   })();
-
-  // Expose our options to the world.
-  $.typer = (function () {
-    return { options: options };
-  })();
-
-  $.extend($.typer, {
-    options: options
-  });
 
   //-- Methods to attach to jQuery sets
 
-  $.fn.typer = function() {
+  $.fn.typer = function(options) {
     var $elements = $(this);
+
+    opts = jQuery.extend({}, $.fn.typer.defaults, options);
 
     return $elements.each(function () {
       var $e = $(this);
 
-      if (typeof $e.attr($.typer.options.typerDataAttr) === "undefined") {
+      if (typeof $e.attr(opts.typerDataAttr) === "undefined") {
         return;
       }
 
@@ -219,14 +198,14 @@ String.prototype.rightChars = function(n){
       j = 0;
 
     if (currentText === newString) {
-      if ($.typer.options.debug === true) {
+      if (opts.debug === true) {
         console.log("Our strings our equal, nothing to type");
       }
       return $e;
     }
 
     if (currentText !== $e.html()) {
-      if ($.typer.options.debug === true) {
+      if (opts.debug === true) {
         console.error("Typer does not work on elements with child elements.");
       }
       return $e;
@@ -234,7 +213,7 @@ String.prototype.rightChars = function(n){
 
     $e.data('typing', true);
 
-    if ($.typer.options.highlightEverything !== true) {
+    if (opts.highlightEverything !== true) {
       while (currentText.charAt(i) === newString.charAt(i)) {
         i++;
       }
@@ -251,7 +230,7 @@ String.prototype.rightChars = function(n){
       oldRight: currentText.rightChars(j - 1),
       leftStop: i,
       rightStop: currentText.length - j,
-      primaryColor: $.typer.options.tapeColor === 'auto' ? $e.data('primaryColor') : $.typer.options.tapeColor,
+      primaryColor: opts.tapeColor === 'auto' ? $e.data('primaryColor') : opts.tapeColor,
       backgroundColor: $e.css('background-color'),
       text: newString
     });
@@ -264,22 +243,37 @@ String.prototype.rightChars = function(n){
   //-- Helper methods. These can one day be customized further to include things like ranges of delays.
 
   getHighlightInterval = function () {
-    return $.typer.options.highlightSpeed;
+    return opts.highlightSpeed;
   };
 
   getTypeInterval = function () {
-    return $.typer.options.typeSpeed;
-  },
+    return opts.typeSpeed;
+  };
 
   clearDelay = function () {
-    return $.typer.options.clearDelay;
-  },
+    return opts.clearDelay;
+  };
 
   typeDelay = function () {
-    return $.typer.options.typeDelay;
+    return opts.typeDelay;
   };
 
   typerInterval = function () {
-    return $.typer.options.typerInterval;
+    return opts.typerInterval;
   };
+
+  $.fn.typer.defaults = {
+    highlightSpeed      : 20,
+    typeSpeed           : 100,
+    clearDelay          : 500,
+    typeDelay           : 200,
+    clearOnHighlight    : true,
+    highlightEverything : true,
+    typerDataAttr       : 'data-typer-targets',
+    typerInterval       : 2000,
+    debug               : false,
+    tapeColor           : 'auto',
+    typerOrder          : 'random',
+  };
+
 })(jQuery);

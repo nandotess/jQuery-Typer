@@ -47,6 +47,11 @@ Set the options individually:
 ```javascript
 $.typer.options.highlightSpeed = 500;
 ```
+
+## Contributing
+
+Make your changes on `src/jquery.typer.js`. To generate updated minified distribution versions run `$ grunt dist`.
+
 ## About
 
 jquery.typer.js was originally developed for [LayerVault](http://layervault.com) by [Kelly Sutton](http://kellysutton.com).
