@@ -14,7 +14,6 @@ String.prototype.rightChars = function(n){
   var opts,
       highlight,
       clearText,
-      backspace,
       type,
       spanWithColor,
       clearDelay,
@@ -155,10 +154,10 @@ String.prototype.rightChars = function(n){
         });
       }
 
-      if (opts.typerOrder == 'random') {
+      if (opts.typerOrder === 'random') {
         $e.typeTo(targets[Math.floor(Math.random()*targets.length)]);
       }
-      else if (opts.typerOrder == 'sequential') {
+      else if (opts.typerOrder === 'sequential') {
         $e.typeTo(targets[last]);
         last = (last < targets.length - 1) ? last + 1 : 0;
       }

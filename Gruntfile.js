@@ -68,7 +68,8 @@ module.exports = function (grunt) {
           eqnull: true,
           browser: true,
           globals: {
-            jQuery: true
+            jQuery: true,
+            console: true
           }
         },
         src: 'src/jquery.typer.js'
@@ -90,6 +91,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task.
-  grunt.registerTask('dist', [/*'jshint:dist', */'concat:dist', 'uglify:dist', 'copy:dist']);
+  grunt.registerTask('dist', ['jshint:dist', 'concat:dist', 'uglify:dist', 'copy:dist']);
 
 };
