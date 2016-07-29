@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+	<head>
+		<title>jquery.typer.js example page</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script src="../app/js/jquery.typer.js"></script>
+		<script src="example.js"></script>
+		<style type="text/css">
+			body {
+				margin: 50px auto;
+				max-width: 600px;
+			}
+			h1 {
+				font-size: 25px;
+				margin: 0 0 20px 0;
+			}
+			code {
+				font-size: 18px;
+				background: #eee;
+				display: inline-block;
+				padding: 10px 5px;
+				margin: 0 0 20px 0;
+				white-space: pre;
+			}
+			.example {
+				margin: 0 0 20px 0;
+				font-size: 18px;
+			}
+			.example > p {
+				font-family: monospace;
+				margin: 0;
+			}
+			.example > p span {
+				color: #000;
+				background-color: #FFF;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>jquery.typer.js example page</h1>
+		<code>$('[data-typer-targets]').typer();</code>
+		<div class="example">
+			<p>Text example before. <span data-typer-targets="Hello,Hi,Hola,Hallo,Haai,Ola,Kaixo,Moni,Aloha,Bonjour,Ciao,Hej">Hello</span>, text example after.</p>
+		</div>
+		<div class="example">
+			<p>Text example before <span data-typer-targets="lorem,ipsum,dol,solor">lorem</span> text example after.</p>
+		</div>
+	</body>
+</html>
