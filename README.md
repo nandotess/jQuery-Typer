@@ -1,6 +1,6 @@
 # jQuery Typer
 * A simple jQuery plugin for a slick typing effect
-* Was originally developed for [LayerVault](http://layervault.com) by [Kelly Sutton](http://kellysutton.com).
+* Was originally developed for [LayerVault](http://layervault.com) by [Kelly Sutton](http://kellysutton.com)
 * Was originally forked from [github.com/kontur/jquery.typer.js](https://github.com/kontur/jquery.typer.js)
 * Plugin entire recoded with jQuery plugin development boilerplate: [github.com/jquery-boilerplate/jquery-boilerplate](https://github.com/jquery-boilerplate/jquery-boilerplate)
 * Now it's possible have many instances from types, each one with its configurations
