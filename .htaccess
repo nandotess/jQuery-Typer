@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^/?$ /example/example.html [R=302,L]
