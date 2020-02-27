@@ -7,7 +7,7 @@
 * NPM, Bower, Gulp
 
 ## Example
-http://jquery-typer-js.nandotess.com/example/
+https://jquery-typer-js.nandotess.com/example/
 
 ## Install NPM
 https://nodejs.org/en/
