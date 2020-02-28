@@ -1,4 +1,4 @@
-# jQuery Typer
+# jQuery Plugin: jQuery Typer
 * A simple jQuery plugin for a slick typing effect
 * Was originally developed for [LayerVault](http://layervault.com) by [Kelly Sutton](http://kellysutton.com)
 * Was originally forked from [github.com/kontur/jquery.typer.js](https://github.com/kontur/jquery.typer.js)
